@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Tabs = () => (
   <div>
-    <button>tasks log</button>
-    <button>tasks chart</button>
+    <Link to="/tasks">tasks log</Link>
+    <Link to="/graph">tasks log</Link>
   </div>
 );
 

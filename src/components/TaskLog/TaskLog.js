@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TaskLog = ({
   data: {
@@ -11,7 +12,7 @@ const TaskLog = ({
     <td>{timeStart}</td>
     <td>{timeEnd}</td>
     <td>{timeSpend}</td>
-    <td><button>info</button></td>
+    <td><Link to={`/tasks/${number}`}>info</Link></td>
     <td><button>delete</button></td>
   </tr>
 );
