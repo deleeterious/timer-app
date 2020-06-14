@@ -25,5 +25,8 @@ module.exports = {
   ],
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/button-has-type': 'off',
+    'react/prop-types': 'off',
+    'import/prefer-default-export': 'off',
   },
 };
