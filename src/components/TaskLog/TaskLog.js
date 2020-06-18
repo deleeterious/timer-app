@@ -1,20 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { deleteTask } from '../../redux/actions';
 
 const TaskLog = ({
   data: {
-    number, task, timeStart, timeEnd, timeSpend,
-  },
+    number, taskName, timeStart, timeEnd, timeSpend, id,
+  }, deleteTask,
 }) => (
   <tr>
     <td>{number}</td>
-    <td>{task}</td>
+    <td>{taskName}</td>
     <td>{timeStart}</td>
     <td>{timeEnd}</td>
     <td>{timeSpend}</td>
     <td><Link to={`/tasks/${number}`}>info</Link></td>
-    <td><button>delete</button></td>
+    <td><button onClick={() => { deleteTask(id); }}>delete</button></td>
   </tr>
 );
 
-export default TaskLog;
+export default connect(null, { deleteTask })(TaskLog);

@@ -1,71 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { createTask } from '../../redux/actions';
 
 let timerId = null;
+let number = 0;
 
-const createTimeString = (hour, min, sec) => `${hour < 10 ? `0${hour}` : hour}:${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`;
+const parseTime = (ms) => {
+  const seconds = parseInt((ms / 1000) % 60, 10);
+  const minutes = parseInt((ms / (1000 * 60)) % 60, 10);
+  const hours = parseInt((ms / (1000 * 60 * 60)) % 24, 10);
+  return `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+};
 
 const Timer = (props) => {
-  const [secondsState, setSecondsState] = useState(0);
-  const [minutsState, setMinutsState] = useState(0);
-  const [hoursState, setHoursState] = useState(0);
-  const [taskNameState, setTaskNameState] = useState('');
-  const [timeStart, setTimeStart] = useState('');
+  const [taskName, setTaskName] = useState('');
+  const [msState, setMsState] = useState(0);
+  const [isStart, setIsStart] = useState(false);
+
+  useEffect(() => {
+    const savedItem = JSON.parse(localStorage.getItem('timeStart'));
+
+    if (savedItem?.isStart) {
+      setIsStart(true);
+      const time = savedItem.timeStart;
+      timerId = setInterval(() => {
+        setMsState(Date.now() - time);
+      }, 1000);
+
+      localStorage.setItem('timeStart', JSON.stringify({ timeStart: +time, isStart: true }));
+    }
+  }, []);
 
   const onTimerStart = () => {
     const time = new Date();
-
+    setIsStart(true);
     timerId = setInterval(() => {
-      setSecondsState((prevSecond) => {
-        if (prevSecond === 59) {
-          setMinutsState((lastMinuts) => {
-            if (lastMinuts === 59) {
-              setHoursState((prevHour) => prevHour + 1);
-              return 0;
-            }
-            return lastMinuts + 1;
-          });
-          return 0;
-        }
-        return prevSecond + 1;
-      });
+      setMsState(Date.now() - time);
     }, 1000);
 
-    setTimeStart(createTimeString(time.getHours(), time.getMinutes(), time.getSeconds()));
+    localStorage.setItem('timeStart', JSON.stringify({ timeStart: +time, isStart: true }));
   };
 
   const onTimerStop = () => {
-    const time = new Date();
+    number += 1;
 
     const newTask = {
-      number: 1,
-      task: taskNameState,
-      timeStart,
-      timeEnd: createTimeString(time.getHours(), time.getMinutes(), time.getSeconds()),
-      timeSpend: createTimeString(hoursState, minutsState, secondsState),
+      number,
+      taskName,
+      timeStart: parseTime(new Date() - msState),
+      timeEnd: parseTime(new Date()),
+      timeSpend: parseTime(msState),
       id: Date.now().toString(),
     };
 
     props.createTask(newTask);
     clearInterval(timerId);
-    timerId = null;
-    setTaskNameState('');
-    setHoursState(0);
-    setMinutsState(0);
-    setSecondsState(0);
+    setIsStart(false);
+    setMsState(0);
+    setTaskName('');
+    localStorage.setItem('timeStart', JSON.stringify({ isStart: false }));
   };
 
   return (
     <div>
       <input
         type="text"
-        onChange={(e) => setTaskNameState(e.target.value)}
-        value={taskNameState}
+        onChange={(e) => setTaskName(e.target.value)}
+        value={taskName}
       />
-      {createTimeString(hoursState, minutsState, secondsState)}
-      {!timerId ? <button onClick={onTimerStart}>start</button>
+      {parseTime(msState)}
+      {!isStart ? <button onClick={onTimerStart}>start</button>
         : <button onClick={onTimerStop}>stop</button>}
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TaskLog from '../../components/TaskLog';
 
-const TasksLogList = ({ tasksLog }) => (
+const TasksLogList = ({ tasks }) => (
   <table>
     <tbody>
       <tr>
@@ -14,11 +14,11 @@ const TasksLogList = ({ tasksLog }) => (
         <th>info</th>
         <th>delete</th>
       </tr>
-      {tasksLog.map((taskLog) => <TaskLog data={taskLog} key={taskLog.id} />)}
+      {tasks.map((task) => <TaskLog data={task} key={task.id} />)}
     </tbody>
   </table>
 );
 
-const mapStateToProps = (state) => ({ tasksLog: state.tasks.tasks });
+const mapStateToProps = (state) => ({ tasks: state.tasks });
 
 export default connect(mapStateToProps, null)(TasksLogList);
