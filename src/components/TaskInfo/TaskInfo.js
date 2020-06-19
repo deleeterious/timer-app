@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { Paper, Box, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import classes from './TaskInfo.module.css';
+
 const TaskInfo = ({ tasks, match }) => {
   if (!tasks) {
     return <h1>Такого таска не существует</h1>;
@@ -12,34 +16,35 @@ const TaskInfo = ({ tasks, match }) => {
     } = tasks.find((task) => task.number.toString() === match.params.id);
 
     return (
-      <div>
-        <p>
+      <Box className={classes.TaskInfo}>
+        <Paper elevation={5} className={classes.TaskInfoItem}>
           Number:
           { number}
-        </p>
-        <p>
+        </Paper>
+        <Paper elevation={5} className={classes.TaskInfoItem}>
           Task name:
           { taskName}
-        </p>
-        <p>
+        </Paper>
+        <Paper elevation={5} className={classes.TaskInfoItem}>
           Time start:
           { timeStart}
-        </p>
-        <p>
+        </Paper>
+        <Paper elevation={5} className={classes.TaskInfoItem}>
           Time end:
           { timeEnd}
-        </p>
-        <p>
+        </Paper>
+        <Paper elevation={5} className={classes.TaskInfoItem}>
           Time spend:
           { timeSpend}
-        </p>
-      </div>
+        </Paper>
+        <Button className={classes.Button} component={Link} to="/tasks">back</Button>
+      </Box>
     );
   }
 
   return null;
 };
 
-const mapStateToProps = (state) => ({ tasks: state.tasks.tasks });
+const mapStateToProps = (state) => ({ tasks: state.tasks });
 
 export default connect(mapStateToProps, null)(TaskInfo);

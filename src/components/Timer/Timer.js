@@ -1,6 +1,10 @@
+import {
+  Box, Input, Paper, Button,
+} from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import classes from './Timer.module.css';
 import { createTask } from '../../redux/actions';
 
 let timerId = null;
@@ -63,16 +67,20 @@ const Timer = (props) => {
   };
 
   return (
-    <div>
-      <input
+    <Box className={classes.Timer}>
+      <Input
+        className={classes.Input}
         type="text"
         onChange={(e) => setTaskName(e.target.value)}
+        placeholder="Name of your task"
         value={taskName}
       />
-      {parseTime(msState)}
-      {!isStart ? <button onClick={onTimerStart}>start</button>
-        : <button onClick={onTimerStop}>stop</button>}
-    </div>
+      <Paper elevation={6} className={classes.Time}>
+        {parseTime(msState)}
+      </Paper>
+      {!isStart ? <Button className={classes.Button} onClick={onTimerStart}>start</Button>
+        : <Button className={classes.Button} onClick={onTimerStop}>stop</Button>}
+    </Box>
   );
 };
 

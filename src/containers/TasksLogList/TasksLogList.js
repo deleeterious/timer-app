@@ -1,22 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {
+  Table, TableHead, TableRow, TableCell, TableBody,
+} from '@material-ui/core';
 import TaskLog from '../../components/TaskLog';
 
 const TasksLogList = ({ tasks }) => (
-  <table>
-    <tbody>
-      <tr>
-        <th>№</th>
-        <th>Task</th>
-        <th>Time start</th>
-        <th>Time end</th>
-        <th>Time spend</th>
-        <th>info</th>
-        <th>delete</th>
-      </tr>
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableCell>№</TableCell>
+        <TableCell>Task</TableCell>
+        <TableCell>Time start</TableCell>
+        <TableCell>Time end</TableCell>
+        <TableCell>Time spend</TableCell>
+        <TableCell>Info</TableCell>
+        <TableCell>Delete</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
       {tasks.map((task) => <TaskLog data={task} key={task.id} />)}
-    </tbody>
-  </table>
+    </TableBody>
+  </Table>
 );
 
 const mapStateToProps = (state) => ({ tasks: state.tasks });

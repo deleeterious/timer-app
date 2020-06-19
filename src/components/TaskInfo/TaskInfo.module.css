@@ -1,0 +1,13 @@
+.TaskInfo {
+  text-align: center;
+  font-size: 35px;
+  font-family: 'Roboto';
+}
+
+.TaskInfoItem {
+  padding: 20px;
+  margin: 20px;
+}
+.Button {
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.5);
+}

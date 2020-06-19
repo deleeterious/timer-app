@@ -2,10 +2,10 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
   Redirect,
 } from 'react-router-dom';
-// import InputTask from '../../components/InputTask';
+
+import { Container } from '@material-ui/core';
 import Timer from '../../components/Timer';
 import Tabs from '../Tabs/Tabs';
 import TasksLogList from '../TasksLogList';
@@ -13,7 +13,7 @@ import TaskInfo from '../../components/TaskInfo/TaskInfo';
 
 function App() {
   return (
-    <div>
+    <Container>
       <Router>
         <Redirect from="/" to="/tasks" />
         <Route exact path={['/tasks', '/graph']} component={Timer} />
@@ -22,7 +22,7 @@ function App() {
 
         <Route exact path="/tasks/:id" component={TaskInfo} />
       </Router>
-    </div>
+    </Container>
   );
 }
 
