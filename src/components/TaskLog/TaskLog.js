@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { TableRow, TableCell, Button } from '@material-ui/core';
 import classes from '../Timer/Timer.module.css';
+import { parseTime } from '../Timer/Timer';
 
 import { deleteTask } from '../../redux/actions';
 
@@ -15,9 +16,9 @@ const TaskLog = ({
   <TableRow>
     <TableCell>{number}</TableCell>
     <TableCell>{taskName}</TableCell>
-    <TableCell>{timeStart}</TableCell>
-    <TableCell>{timeEnd}</TableCell>
-    <TableCell>{timeSpend}</TableCell>
+    <TableCell>{parseTime(timeStart)}</TableCell>
+    <TableCell>{parseTime(timeEnd)}</TableCell>
+    <TableCell>{parseTime(timeSpend)}</TableCell>
     <TableCell>
       <Button
         className={classes.Button}

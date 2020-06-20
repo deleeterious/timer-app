@@ -10,7 +10,7 @@ import { createTask } from '../../redux/actions';
 let timerId = null;
 let number = 0;
 
-const parseTime = (ms) => {
+export const parseTime = (ms) => {
   const seconds = parseInt((ms / 1000) % 60, 10);
   const minutes = parseInt((ms / (1000 * 60)) % 60, 10);
   const hours = parseInt((ms / (1000 * 60 * 60)) % 24, 10);
@@ -52,9 +52,9 @@ const Timer = (props) => {
     const newTask = {
       number,
       taskName,
-      timeStart: parseTime(new Date() - msState),
-      timeEnd: parseTime(new Date()),
-      timeSpend: parseTime(msState),
+      timeStart: new Date() - msState,
+      timeEnd: +new Date(),
+      timeSpend: msState,
       id: Date.now().toString(),
     };
 
