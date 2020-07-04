@@ -18,7 +18,7 @@ const TaskLog = ({
     <TableCell>{taskName}</TableCell>
     <TableCell>{parseTime(timeStart)}</TableCell>
     <TableCell>{parseTime(timeEnd)}</TableCell>
-    <TableCell>{parseTime(timeSpend)}</TableCell>
+    <TableCell>{parseTime(timeSpend, true)}</TableCell>
     <TableCell>
       <Button
         className={classes.Button}

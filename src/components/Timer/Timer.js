@@ -10,10 +10,11 @@ import { createTask } from '../../redux/actions';
 let timerId = null;
 let number = 0;
 
-export const parseTime = (ms) => {
-  const seconds = parseInt((ms / 1000) % 60, 10);
-  const minutes = parseInt((ms / (1000 * 60)) % 60, 10);
-  const hours = parseInt((ms / (1000 * 60 * 60)) % 24, 10);
+export const parseTime = (ms, utc = false) => {
+  const time = new Date(ms);
+  const seconds = utc ? time.getUTCSeconds() : time.getSeconds();
+  const minutes = utc ? time.getUTCMinutes() : time.getMinutes();
+  const hours = utc ? time.getUTCHours() : time.getHours();
   return `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
@@ -76,7 +77,7 @@ const Timer = (props) => {
         value={taskName}
       />
       <Paper elevation={6} className={classes.Time}>
-        {parseTime(msState)}
+        {parseTime(msState, true)}
       </Paper>
       {!isStart ? <Button className={classes.Button} onClick={onTimerStart}>start</Button>
         : <Button className={classes.Button} onClick={onTimerStop}>stop</Button>}

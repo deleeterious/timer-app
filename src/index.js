@@ -18,9 +18,11 @@ const persistedState = localStorage.getItem('tasksState')
   ? JSON.parse(localStorage.getItem('tasksState'))
   : initialState;
 
-const store = createStore(rootReducer, persistedState, applyMiddleware(sagaMiddleware));
+const store = createStore(rootReducer, persistedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 store.subscribe(() => {
+  console.log(store.getState());
+
   localStorage.setItem('tasksState', JSON.stringify(store.getState()));
 });
 

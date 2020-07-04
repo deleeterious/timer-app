@@ -28,5 +28,6 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/prop-types': 'off',
     'import/prefer-default-export': 'off',
+    'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
   },
 };
