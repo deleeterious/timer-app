@@ -1,48 +1,47 @@
 import React from 'react';
+// redux
 import { connect } from 'react-redux';
-
+// material-ui
 import { Paper, Box, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+// react-router
+import { Link, Redirect } from 'react-router-dom';
+// css
 import classes from './TaskInfo.module.css';
 
 const TaskInfo = ({ tasks, match }) => {
-  if (!tasks) {
-    return <h1>Такого таска не существует</h1>;
+  if (!tasks.find((task) => task.number.toString() === match.params.id)) {
+    return <Redirect to="/error" />;
   }
 
-  if (tasks.length >= 1) {
-    const {
-      number, taskName, timeStart, timeEnd, timeSpend,
-    } = tasks.find((task) => task.number.toString() === match.params.id);
+  const {
+    number, taskName, timeStart, timeEnd, timeSpend,
+  } = tasks.find((task) => task.number.toString() === match.params.id);
 
-    return (
-      <Box className={classes.TaskInfo}>
-        <Paper elevation={5} className={classes.TaskInfoItem}>
-          Number:
-          { number}
-        </Paper>
-        <Paper elevation={5} className={classes.TaskInfoItem}>
-          Task name:
-          { taskName}
-        </Paper>
-        <Paper elevation={5} className={classes.TaskInfoItem}>
-          Time start:
-          { timeStart}
-        </Paper>
-        <Paper elevation={5} className={classes.TaskInfoItem}>
-          Time end:
-          { timeEnd}
-        </Paper>
-        <Paper elevation={5} className={classes.TaskInfoItem}>
-          Time spend:
-          { timeSpend}
-        </Paper>
-        <Button className={classes.Button} component={Link} to="/tasks">back</Button>
-      </Box>
-    );
-  }
-
-  return null;
+  return (
+    <Box className={classes.TaskInfo}>
+      <Paper elevation={5} className={classes.TaskInfoItem}>
+        Number:
+        { number}
+      </Paper>
+      <Paper elevation={5} className={classes.TaskInfoItem}>
+        Task name:
+        { taskName}
+      </Paper>
+      <Paper elevation={5} className={classes.TaskInfoItem}>
+        Time start:
+        { timeStart}
+      </Paper>
+      <Paper elevation={5} className={classes.TaskInfoItem}>
+        Time end:
+        { timeEnd}
+      </Paper>
+      <Paper elevation={5} className={classes.TaskInfoItem}>
+        Time spend:
+        { timeSpend}
+      </Paper>
+      <Button className={classes.Button} component={Link} to="/tasks">back</Button>
+    </Box>
+  );
 };
 
 const mapStateToProps = (state) => ({ tasks: state.tasks });

@@ -32,14 +32,13 @@ const Graph = ({ data, generateTasks }) => {
         graphData[hourStart].minutes = 60;
         minutesSpend -= 60;
         hourStart += 1;
-        console.log(timeStart.getMinutes());
       }
     }
 
+    if (hourStart === 24) hourStart = 0;
+
     graphData[hourStart].minutes += minutesSpend;
   });
-
-  console.log(graphData);
 
   return (
     <div>

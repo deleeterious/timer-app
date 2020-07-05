@@ -1,11 +1,15 @@
+import React, { useState, useEffect } from 'react';
+// material-ui
 import {
   Box, Input, Paper, Button,
 } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+// redux
 import { connect } from 'react-redux';
-
-import classes from './Timer.module.css';
 import { createTask } from '../../redux/actions';
+// css
+import classes from './Timer.module.css';
+// components
+import AlertDialog from '../AlertDialog';
 
 let timerId = null;
 let number = 0;
@@ -22,6 +26,7 @@ const Timer = (props) => {
   const [taskName, setTaskName] = useState('');
   const [msState, setMsState] = useState(0);
   const [isStart, setIsStart] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const savedItem = JSON.parse(localStorage.getItem('timeStart'));
@@ -37,6 +42,10 @@ const Timer = (props) => {
     }
   }, []);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const onTimerStart = () => {
     const time = new Date();
     setIsStart(true);
@@ -49,6 +58,11 @@ const Timer = (props) => {
 
   const onTimerStop = () => {
     number += 1;
+
+    if (!taskName.trim()) {
+      setOpen(true);
+      return;
+    }
 
     const newTask = {
       number,
@@ -68,20 +82,27 @@ const Timer = (props) => {
   };
 
   return (
-    <Box className={classes.Timer}>
-      <Input
-        className={classes.Input}
-        type="text"
-        onChange={(e) => setTaskName(e.target.value)}
-        placeholder="Name of your task"
-        value={taskName}
+    <>
+      <AlertDialog
+        open={open}
+        handleClose={handleClose}
       />
-      <Paper elevation={6} className={classes.Time}>
-        {parseTime(msState, true)}
-      </Paper>
-      {!isStart ? <Button className={classes.Button} onClick={onTimerStart}>start</Button>
-        : <Button className={classes.Button} onClick={onTimerStop}>stop</Button>}
-    </Box>
+
+      <Box className={classes.Timer}>
+        <Input
+          className={classes.Input}
+          type="text"
+          onChange={(e) => setTaskName(e.target.value)}
+          placeholder="Name of your task"
+          value={taskName}
+        />
+        <Paper elevation={6} className={classes.Time}>
+          {parseTime(msState, true)}
+        </Paper>
+        {!isStart ? <Button className={classes.Button} onClick={onTimerStart}>start</Button>
+          : <Button className={classes.Button} onClick={onTimerStop}>stop</Button>}
+      </Box>
+    </>
   );
 };
 
