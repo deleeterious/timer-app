@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {
   Box, Input, Paper, Button,
 } from '@material-ui/core';
+// prop-types
+import PropTypes from 'prop-types';
 // redux
 import { connect } from 'react-redux';
 import { createTask } from '../../redux/actions';
@@ -12,7 +14,6 @@ import classes from './Timer.module.css';
 import AlertDialog from '../AlertDialog';
 
 let timerId = null;
-let number = 0;
 
 export const parseTime = (ms, utc = false) => {
   const time = new Date(ms);
@@ -22,7 +23,8 @@ export const parseTime = (ms, utc = false) => {
   return `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
-const Timer = (props) => {
+// eslint-disable-next-line no-shadow
+const Timer = ({ tasks, createTask }) => {
   const [taskName, setTaskName] = useState('');
   const [msState, setMsState] = useState(0);
   const [isStart, setIsStart] = useState(false);
@@ -40,6 +42,10 @@ const Timer = (props) => {
 
       localStorage.setItem('timeStart', JSON.stringify({ timeStart: +time, isStart: true }));
     }
+
+    return () => {
+      clearInterval(timerId);
+    };
   }, []);
 
   const handleClose = () => {
@@ -57,15 +63,13 @@ const Timer = (props) => {
   };
 
   const onTimerStop = () => {
-    number += 1;
-
     if (!taskName.trim()) {
       setOpen(true);
       return;
     }
 
     const newTask = {
-      number,
+      number: tasks[tasks.length - 1]?.number + 1 || 1,
       taskName,
       timeStart: new Date() - msState,
       timeEnd: +new Date(),
@@ -73,7 +77,7 @@ const Timer = (props) => {
       id: Date.now().toString(),
     };
 
-    props.createTask(newTask);
+    createTask(newTask);
     clearInterval(timerId);
     setIsStart(false);
     setMsState(0);
@@ -110,4 +114,11 @@ const Timer = (props) => {
 //   createTask,
 // };
 
-export default connect(null, { createTask })(Timer);
+const mapStateToProps = (state) => ({ tasks: state.tasks });
+
+export default connect(mapStateToProps, { createTask })(Timer);
+
+Timer.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object),
+  createTask: PropTypes.func,
+};

@@ -1,27 +1,33 @@
 import React from 'react';
+// react-router
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-
+// material-ui
 import { TableRow, TableCell, Button } from '@material-ui/core';
-import classes from '../Timer/Timer.module.css';
-import { parseTime } from '../Timer/Timer';
-
+// prop-types
+import PropTypes from 'prop-types';
+// redux
+import { connect } from 'react-redux';
 import { deleteTask } from '../../redux/actions';
+// css
+import TimerClasses from '../Timer/Timer.module.css';
+import classes from './TaskLog.module.css';
+// fn
+import { parseTime } from '../Timer/Timer';
 
 const TaskLog = ({
   data: {
     number, taskName, timeStart, timeEnd, timeSpend, id,
   }, deleteTask,
 }) => (
-  <TableRow>
+  <TableRow className={classes.TableRow}>
     <TableCell>{number}</TableCell>
-    <TableCell>{taskName}</TableCell>
+    <TableCell style={{ overflow: 'hidden', maxWidth: 300, minWidth: 200 }}>{taskName}</TableCell>
     <TableCell>{parseTime(timeStart)}</TableCell>
     <TableCell>{parseTime(timeEnd)}</TableCell>
     <TableCell>{parseTime(timeSpend, true)}</TableCell>
     <TableCell>
       <Button
-        className={classes.Button}
+        className={TimerClasses.Button}
         component={Link}
         to={`/tasks/${number}`}
       >
@@ -30,7 +36,7 @@ const TaskLog = ({
     </TableCell>
     <TableCell>
       <Button
-        className={classes.Button}
+        className={TimerClasses.Button}
         onClick={() => { deleteTask(id); }}
       >
         delete
@@ -40,3 +46,14 @@ const TaskLog = ({
 );
 
 export default connect(null, { deleteTask })(TaskLog);
+
+TaskLog.propTypes = {
+  data: PropTypes.shape({
+    number: PropTypes.number,
+    taskName: PropTypes.string,
+    timeStart: PropTypes.number,
+    timeEnd: PropTypes.number,
+    timeSpand: PropTypes.number,
+  }),
+  deleteTask: PropTypes.func,
+};

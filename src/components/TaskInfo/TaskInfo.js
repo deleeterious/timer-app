@@ -5,8 +5,12 @@ import { connect } from 'react-redux';
 import { Paper, Box, Button } from '@material-ui/core';
 // react-router
 import { Link, Redirect } from 'react-router-dom';
+// prop-types
+import PropTypes from 'prop-types';
 // css
 import classes from './TaskInfo.module.css';
+// fn
+import { parseTime } from '../Timer/Timer';
 
 const TaskInfo = ({ tasks, match }) => {
   if (!tasks.find((task) => task.number.toString() === match.params.id)) {
@@ -29,15 +33,15 @@ const TaskInfo = ({ tasks, match }) => {
       </Paper>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Time start:
-        { timeStart}
+        { parseTime(timeStart)}
       </Paper>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Time end:
-        { timeEnd}
+        { parseTime(timeEnd)}
       </Paper>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Time spend:
-        { timeSpend}
+        { parseTime(timeSpend, true)}
       </Paper>
       <Button className={classes.Button} component={Link} to="/tasks">back</Button>
     </Box>
@@ -47,3 +51,8 @@ const TaskInfo = ({ tasks, match }) => {
 const mapStateToProps = (state) => ({ tasks: state.tasks });
 
 export default connect(mapStateToProps, null)(TaskInfo);
+
+TaskInfo.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object),
+  match: PropTypes.object,
+};

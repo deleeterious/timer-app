@@ -17,7 +17,7 @@ import ErrorPage from '../../components/Error';
 
 function App() {
   return (
-    <Container>
+    <Container maxWidth={false}>
       <Router>
         <Redirect to="/tasks" />
         <Route exact path={['/tasks', '/graph']} component={Timer} />

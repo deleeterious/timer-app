@@ -4,14 +4,18 @@ import {
   BarChart, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer,
 } from 'recharts';
 // material UI
-import { Button } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
+// prop-types
+import PropTypes from 'prop-types';
 // redux
 import { connect } from 'react-redux';
 import { generateTasks } from '../../redux/actions';
 // styles
+import TimerClasses from '../../components/Timer/Timer.module.css';
 import classes from './Graph.module.css';
 
-const Graph = ({ data, generateTasks }) => {
+// eslint-disable-next-line no-shadow
+export const Graph = ({ data, generateTasks }) => {
   const graphData = [];
   for (let i = 0; i < 24; i++) {
     graphData.push({ minutes: 0 });
@@ -29,36 +33,43 @@ const Graph = ({ data, generateTasks }) => {
       minutesSpend -= residue;
 
       while (minutesSpend > 60) {
+        if (hourStart === 24) hourStart = 0;
         graphData[hourStart].minutes = 60;
         minutesSpend -= 60;
         hourStart += 1;
       }
     }
 
-    if (hourStart === 24) hourStart = 0;
-
     graphData[hourStart].minutes += minutesSpend;
   });
 
   return (
-    <div>
-      <BarChart width={600} height={250} data={graphData}>
-        <XAxis />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="minutes" fill="#8884d8" />
-      </BarChart>
+    <Box className={classes.Graph}>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={graphData}>
+          <XAxis />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar name="Minutes in this hour" maxBarSize={25} dataKey="minutes" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
 
       <Button
-        className={classes.Button}
+        className={TimerClasses.Button}
+        style={{ float: 'right' }}
         onClick={generateTasks}
       >
         GENERATE
       </Button>
-    </div>
+    </Box>
   );
 };
 const mapStateToProps = (state) => ({ data: state.tasks });
 
 export default connect(mapStateToProps, { generateTasks })(Graph);
+
+Graph.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+  generateTasks: PropTypes.func,
+};

@@ -1,12 +1,19 @@
 import React from 'react';
+// redux
 import { connect } from 'react-redux';
+// material-ui
 import {
   Table, TableHead, TableRow, TableCell, TableBody,
 } from '@material-ui/core';
+// prop-types
+import PropTypes from 'prop-types';
+// components
 import TaskLog from '../../components/TaskLog';
+// css
+import classes from './TasksLogList.module.css';
 
 const TasksLogList = ({ tasks }) => (
-  <Table>
+  <Table className={classes.Table}>
     <TableHead>
       <TableRow>
         <TableCell>№</TableCell>
@@ -27,3 +34,7 @@ const TasksLogList = ({ tasks }) => (
 const mapStateToProps = (state) => ({ tasks: state.tasks });
 
 export default connect(mapStateToProps, null)(TasksLogList);
+
+TasksLogList.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object),
+};
