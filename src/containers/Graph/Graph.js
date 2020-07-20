@@ -65,11 +65,12 @@ export const Graph = ({ data, generateTasks }) => {
     </Box>
   );
 };
-const mapStateToProps = (state) => ({ data: state.tasks });
-
-export default connect(mapStateToProps, { generateTasks })(Graph);
 
 Graph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   generateTasks: PropTypes.func,
 };
+
+const mapStateToProps = (state) => ({ data: state.tasks });
+
+export default connect(mapStateToProps, { generateTasks })(Graph);

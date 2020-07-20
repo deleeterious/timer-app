@@ -9,39 +9,41 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // css
 import classes from './TaskInfo.module.css';
-// fn
+// utils
 import { parseTime } from '../Timer/Timer';
 
 const TaskInfo = ({ tasks, match }) => {
-  if (!tasks.find((task) => task.number.toString() === match.params.id)) {
+  const currentTask = tasks.find((task) => task.number.toString() === match.params.id);
+
+  if (!currentTask) {
     return <Redirect to="/error" />;
   }
 
   const {
     number, taskName, timeStart, timeEnd, timeSpend,
-  } = tasks.find((task) => task.number.toString() === match.params.id);
+  } = currentTask;
 
   return (
     <Box className={classes.TaskInfo}>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Number:
-        { number}
+        {number}
       </Paper>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Task name:
-        { taskName}
+        {taskName}
       </Paper>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Time start:
-        { parseTime(timeStart)}
+        {parseTime(timeStart)}
       </Paper>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Time end:
-        { parseTime(timeEnd)}
+        {parseTime(timeEnd)}
       </Paper>
       <Paper elevation={5} className={classes.TaskInfoItem}>
         Time spend:
-        { parseTime(timeSpend, true)}
+        {parseTime(timeSpend, true)}
       </Paper>
       <Button className={classes.Button} component={Link} to="/tasks">back</Button>
     </Box>
@@ -49,10 +51,9 @@ const TaskInfo = ({ tasks, match }) => {
 };
 
 const mapStateToProps = (state) => ({ tasks: state.tasks });
-
-export default connect(mapStateToProps, null)(TaskInfo);
-
 TaskInfo.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object),
   match: PropTypes.object,
 };
+
+export default connect(mapStateToProps, null)(TaskInfo);

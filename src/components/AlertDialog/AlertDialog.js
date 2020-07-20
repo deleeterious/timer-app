@@ -9,32 +9,30 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // prop-types
 import PropTypes from 'prop-types';
 
-export default function AlertDialog({ open, handleClose }) {
-  return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Empty task name</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            You are trying close your task without name,enter the title and try again!
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-}
+const AlertDialog = ({ open, handleClose }) => (
+  <Dialog
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">Empty task name</DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+        You are trying close your task without name,enter the title and try again!
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={handleClose} color="primary" autoFocus>
+        Close
+      </Button>
+    </DialogActions>
+  </Dialog>
+);
 
 AlertDialog.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func,
 };
+
+export default AlertDialog;

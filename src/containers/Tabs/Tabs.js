@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // react-router
 import { Link } from 'react-router-dom';
 // material-ui
@@ -7,7 +7,7 @@ import { Tabs as MaterialTabs, Tab, Box } from '@material-ui/core';
 import classes from './Tabs.module.css';
 
 const Tabs = () => {
-  const [value, setValue] = React.useState('log');
+  const [value, setValue] = useState('log');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

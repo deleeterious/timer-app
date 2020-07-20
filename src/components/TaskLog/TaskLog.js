@@ -9,9 +9,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteTask } from '../../redux/actions';
 // css
-import TimerClasses from '../Timer/Timer.module.css';
+// import TimerClasses from '../Timer/Timer.module.css';
 import classes from './TaskLog.module.css';
-// fn
+// utils
 import { parseTime } from '../Timer/Timer';
 
 const TaskLog = ({
@@ -27,7 +27,7 @@ const TaskLog = ({
     <TableCell>{parseTime(timeSpend, true)}</TableCell>
     <TableCell>
       <Button
-        className={TimerClasses.Button}
+        className={classes.Button}
         component={Link}
         to={`/tasks/${number}`}
       >
@@ -36,7 +36,7 @@ const TaskLog = ({
     </TableCell>
     <TableCell>
       <Button
-        className={TimerClasses.Button}
+        className={classes.Button}
         onClick={() => { deleteTask(id); }}
       >
         delete
@@ -44,8 +44,6 @@ const TaskLog = ({
     </TableCell>
   </TableRow>
 );
-
-export default connect(null, { deleteTask })(TaskLog);
 
 TaskLog.propTypes = {
   data: PropTypes.shape({
@@ -57,3 +55,5 @@ TaskLog.propTypes = {
   }),
   deleteTask: PropTypes.func,
 };
+
+export default connect(null, { deleteTask })(TaskLog);

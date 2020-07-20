@@ -14,6 +14,8 @@ import TasksLogList from '../TasksLogList';
 import TaskInfo from '../../components/TaskInfo';
 import Graph from '../Graph';
 import ErrorPage from '../../components/Error';
+// style
+import './App.css';
 
 function App() {
   return (

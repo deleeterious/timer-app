@@ -52,7 +52,7 @@ const Timer = ({ tasks, createTask }) => {
     setOpen(false);
   };
 
-  const onTimerStart = () => {
+  const handleTimerStart = () => {
     const time = new Date();
     setIsStart(true);
     timerId = setInterval(() => {
@@ -62,7 +62,7 @@ const Timer = ({ tasks, createTask }) => {
     localStorage.setItem('timeStart', JSON.stringify({ timeStart: +time, isStart: true }));
   };
 
-  const onTimerStop = () => {
+  const handleTimerStop = () => {
     if (!taskName.trim()) {
       setOpen(true);
       return;
@@ -103,22 +103,22 @@ const Timer = ({ tasks, createTask }) => {
         <Paper elevation={6} className={classes.Time}>
           {parseTime(msState, true)}
         </Paper>
-        {!isStart ? <Button className={classes.Button} onClick={onTimerStart}>start</Button>
-          : <Button className={classes.Button} onClick={onTimerStop}>stop</Button>}
+        <Button
+          className={classes.Button}
+          onClick={!isStart ? handleTimerStart : handleTimerStop}
+        >
+          {!isStart ? 'start' : 'stop'}
+        </Button>
       </Box>
     </>
   );
 };
 
-// const mapDispatchToProps = {
-//   createTask,
-// };
-
-const mapStateToProps = (state) => ({ tasks: state.tasks });
-
-export default connect(mapStateToProps, { createTask })(Timer);
-
 Timer.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object),
   createTask: PropTypes.func,
 };
+
+const mapStateToProps = (state) => ({ tasks: state.tasks });
+
+export default connect(mapStateToProps, { createTask })(Timer);
