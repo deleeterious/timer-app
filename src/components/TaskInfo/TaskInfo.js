@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 // css
 import classes from './TaskInfo.module.css';
 // utils
-import { parseTime } from '../Timer/Timer';
+import { parseTime } from '../../utils/parseTime';
 
 const TaskInfo = ({ tasks, match }) => {
   const currentTask = tasks.find((task) => task.number.toString() === match.params.id);

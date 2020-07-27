@@ -15,11 +15,11 @@ import TaskInfo from '../../components/TaskInfo';
 import Graph from '../Graph';
 import ErrorPage from '../../components/Error';
 // style
-import './App.css';
+import classes from './App.module.css';
 
 function App() {
   return (
-    <Container maxWidth={false}>
+    <Container maxWidth={false} className={classes.App}>
       <Router>
         <Redirect to="/tasks" />
         <Route exact path={['/tasks', '/graph']} component={Timer} />

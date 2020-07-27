@@ -9,10 +9,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteTask } from '../../redux/actions';
 // css
-// import TimerClasses from '../Timer/Timer.module.css';
 import classes from './TaskLog.module.css';
 // utils
-import { parseTime } from '../Timer/Timer';
+import { parseTime } from '../../utils/parseTime';
 
 const TaskLog = ({
   data: {
@@ -21,7 +20,7 @@ const TaskLog = ({
 }) => (
   <TableRow className={classes.TableRow}>
     <TableCell>{number}</TableCell>
-    <TableCell style={{ overflow: 'hidden', maxWidth: 300, minWidth: 200 }}>{taskName}</TableCell>
+    <TableCell className={classes.TaskName} style={{ overflow: 'hidden' }}>{taskName}</TableCell>
     <TableCell>{parseTime(timeStart)}</TableCell>
     <TableCell>{parseTime(timeEnd)}</TableCell>
     <TableCell>{parseTime(timeSpend, true)}</TableCell>

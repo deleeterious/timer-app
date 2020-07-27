@@ -8,6 +8,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // prop-types
 import PropTypes from 'prop-types';
+// styles
+import classes from './AlertDialog.module.css';
 
 const AlertDialog = ({ open, handleClose }) => (
   <Dialog
@@ -16,7 +18,7 @@ const AlertDialog = ({ open, handleClose }) => (
     aria-labelledby="alert-dialog-title"
     aria-describedby="alert-dialog-description"
   >
-    <DialogTitle id="alert-dialog-title">Empty task name</DialogTitle>
+    <DialogTitle id="alert-dialog-title" className={classes.DialogTitle}>Empty task name</DialogTitle>
     <DialogContent>
       <DialogContentText id="alert-dialog-description">
         You are trying close your task without name,enter the title and try again!

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // material-ui
 import {
   Box, Input, Paper, Button,
@@ -12,16 +12,10 @@ import { createTask } from '../../redux/actions';
 import classes from './Timer.module.css';
 // components
 import AlertDialog from '../AlertDialog';
+// utils
+import { parseTime } from '../../utils/parseTime';
 
 let timerId = null;
-
-export const parseTime = (ms, utc = false) => {
-  const time = new Date(ms);
-  const seconds = utc ? time.getUTCSeconds() : time.getSeconds();
-  const minutes = utc ? time.getUTCMinutes() : time.getMinutes();
-  const hours = utc ? time.getUTCHours() : time.getHours();
-  return `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-};
 
 // eslint-disable-next-line no-shadow
 const Timer = ({ tasks, createTask }) => {
@@ -30,7 +24,11 @@ const Timer = ({ tasks, createTask }) => {
   const [isStart, setIsStart] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const inputTaskName = useRef(null);
+
   useEffect(() => {
+    setTaskName(localStorage.getItem('taskName') || '');
+
     const savedItem = JSON.parse(localStorage.getItem('timeStart'));
 
     if (savedItem?.isStart) {
@@ -47,6 +45,11 @@ const Timer = ({ tasks, createTask }) => {
       clearInterval(timerId);
     };
   }, []);
+
+  const handleChangeInput = (e) => {
+    localStorage.setItem('taskName', e.target.value);
+    setTaskName(e.target.value);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -83,6 +86,8 @@ const Timer = ({ tasks, createTask }) => {
     setMsState(0);
     setTaskName('');
     localStorage.setItem('timeStart', JSON.stringify({ isStart: false }));
+    localStorage.setItem('taskName', '');
+    inputTaskName.current.focus();
   };
 
   return (
@@ -94,9 +99,11 @@ const Timer = ({ tasks, createTask }) => {
 
       <Box className={classes.Timer}>
         <Input
+          inputRef={inputTaskName}
+          autoFocus
           className={classes.Input}
           type="text"
-          onChange={(e) => setTaskName(e.target.value)}
+          onChange={handleChangeInput}
           placeholder="Name of your task"
           value={taskName}
         />
