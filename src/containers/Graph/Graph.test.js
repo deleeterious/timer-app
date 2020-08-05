@@ -1,49 +1,48 @@
-import React from 'react';
-// enzyme
-import { mount } from 'enzyme';
-// recharts
-import { BarChart } from 'recharts';
-// components
-import { Graph } from './Graph';
+// utils
+import { transformData } from '../../utils/transformData';
+
+const CURRENT_DAY = 5;
 
 test('grouping tasks for the schedule by the hour', () => {
   const data = [{
-    timeSpend: 11969130,
-    timeStart: 1594142162117,
+    timeEnd: 1596628922635,
+    timeSpend: 8245000,
+    timeStart: 1596620677635,
   },
   {
-    timeSpend: 21475993,
-    timeStart: 1594154140208,
+    timeEnd: 1596649452352,
+    timeSpend: 20273000,
+    timeStart: 1596629179352,
   }];
 
   const graphData = [
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 0 },
+    { minutes: 16 },
+    { minutes: 60 },
+    { minutes: 60 },
+    { minutes: 55 },
     { minutes: 60 },
     { minutes: 60 },
     { minutes: 60 },
     { minutes: 60 },
-    { minutes: 60 },
-    { minutes: 32 },
+    { minutes: 43 },
     { minutes: 0 },
     { minutes: 0 },
     { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 0 },
-    { minutes: 44 },
-    { minutes: 60 },
-    { minutes: 60 },
-    { minutes: 60 },
   ];
 
-  const wrapper = mount(<Graph data={data} />);
+  const tranformedData = transformData(data, CURRENT_DAY);
 
-  expect(wrapper.find(BarChart).prop('data')).toEqual(graphData);
+  expect(tranformedData).toEqual(graphData);
 });

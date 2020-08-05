@@ -17,10 +17,11 @@ import classes from './Graph.module.css';
 import { transformData } from '../../utils/transformData';
 
 // eslint-disable-next-line no-shadow
+
 export const Graph = ({ data, generateTasks }) => (
   <Box className={classes.Graph}>
     <ResponsiveContainer width="100%" height={280}>
-      <BarChart data={transformData(data)}>
+      <BarChart data={transformData(data, new Date().getDate())}>
         <XAxis />
         <YAxis />
         <Tooltip />

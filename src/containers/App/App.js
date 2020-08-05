@@ -17,20 +17,18 @@ import ErrorPage from '../../components/Error';
 // style
 import classes from './App.module.css';
 
-function App() {
-  return (
-    <Container maxWidth={false} className={classes.App}>
-      <Router>
-        <Redirect to="/tasks" />
-        <Route exact path={['/tasks', '/graph']} component={Timer} />
-        <Route exact path={['/tasks', '/graph']} component={Tabs} />
-        <Route exact path="/tasks" component={TasksLogList} />
-        <Route exact path="/graph" component={Graph} />
-        <Route exact path="/tasks/:id" component={TaskInfo} />
-        <Route exact path="/error" component={ErrorPage} />
-      </Router>
-    </Container>
-  );
-}
+const App = () => (
+  <Container maxWidth={false} className={classes.App}>
+    <Router>
+      <Redirect to="/tasks" />
+      <Route exact path={['/tasks', '/graph']} component={Timer} />
+      <Route exact path={['/tasks', '/graph']} component={Tabs} />
+      <Route exact path="/tasks" component={TasksLogList} />
+      <Route exact path="/graph" component={Graph} />
+      <Route exact path="/tasks/:id" component={TaskInfo} />
+      <Route exact path="/error" component={ErrorPage} />
+    </Router>
+  </Container>
+);
 
 export default App;

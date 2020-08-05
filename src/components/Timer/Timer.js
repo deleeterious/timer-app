@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, memo, useCallback,
+} from 'react';
+
 // material-ui
 import {
-  Box, Input, Paper, Button,
+  Box, Button,
 } from '@material-ui/core';
 // prop-types
 import PropTypes from 'prop-types';
@@ -13,7 +16,9 @@ import classes from './Timer.module.css';
 // components
 import AlertDialog from '../AlertDialog';
 // utils
-import { parseTime } from '../../utils/parseTime';
+import { fixMs } from '../../utils/utils';
+import TimerClock from './TimerClock';
+import TimerInput from './TimerInput';
 
 let timerId = null;
 
@@ -35,7 +40,7 @@ const Timer = ({ tasks, createTask }) => {
       setIsStart(true);
       const time = savedItem.timeStart;
       timerId = setInterval(() => {
-        setMsState(Date.now() - time);
+        setMsState(fixMs(Date.now() - time));
       }, 1000);
 
       localStorage.setItem('timeStart', JSON.stringify({ timeStart: +time, isStart: true }));
@@ -46,10 +51,11 @@ const Timer = ({ tasks, createTask }) => {
     };
   }, []);
 
-  const handleChangeInput = (e) => {
-    localStorage.setItem('taskName', e.target.value);
-    setTaskName(e.target.value);
-  };
+  const handleChangeInput = useCallback((event) => {
+    const { value } = event.target;
+    setTaskName(value);
+    localStorage.setItem('taskName', value);
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -59,7 +65,7 @@ const Timer = ({ tasks, createTask }) => {
     const time = new Date();
     setIsStart(true);
     timerId = setInterval(() => {
-      setMsState(Date.now() - time);
+      setMsState(fixMs(Date.now() - time));
     }, 1000);
 
     localStorage.setItem('timeStart', JSON.stringify({ timeStart: +time, isStart: true }));
@@ -98,18 +104,14 @@ const Timer = ({ tasks, createTask }) => {
       />
 
       <Box className={classes.Timer}>
-        <Input
-          inputRef={inputTaskName}
-          autoFocus
-          className={classes.Input}
-          type="text"
-          onChange={handleChangeInput}
-          placeholder="Name of your task"
-          value={taskName}
+        <TimerInput
+          inputTaskName={inputTaskName}
+          handleChangeInput={handleChangeInput}
+          taskName={taskName}
         />
-        <Paper elevation={6} className={classes.Time}>
-          {parseTime(msState, true)}
-        </Paper>
+
+        <TimerClock msState={msState} />
+
         <Button
           className={classes.Button}
           onClick={!isStart ? handleTimerStart : handleTimerStop}
@@ -128,4 +130,4 @@ Timer.propTypes = {
 
 const mapStateToProps = (state) => ({ tasks: state.tasks });
 
-export default connect(mapStateToProps, { createTask })(Timer);
+export default connect(mapStateToProps, { createTask })(memo(Timer));
