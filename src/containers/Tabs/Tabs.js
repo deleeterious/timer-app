@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 // react-router
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 // material-ui
-import { Tabs as MaterialTabs, Tab, Box } from '@material-ui/core';
+import { Tabs as MaterialTabs, Tab, Box } from '@material-ui/core'
 // css
-import classes from './Tabs.module.css';
+import classes from './Tabs.module.css'
 
 const Tabs = () => {
-  const [value, setValue] = useState('log');
+  const [value, setValue] = useState('log')
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
   return (
     <Box>
       <MaterialTabs
@@ -24,7 +24,7 @@ const Tabs = () => {
         <Tab value="graph" label="TASKS CHARTS" component={Link} to="/graph" />
       </MaterialTabs>
     </Box>
-  );
-};
+  )
+}
 
-export default Tabs;
+export default Tabs

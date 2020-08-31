@@ -1,16 +1,22 @@
-import { CREATE_TASK, DELETE_TASK, GENERATE_TASKS } from './types';
+import { CREATE_TASK, DELETE_TASK, GENERATE_TASKS } from './types'
 
 const rootReducer = (state, action) => {
-  switch (action.type) {
-    case CREATE_TASK:
-      return { ...state, tasks: [...state.tasks, action.payload] };
-    case DELETE_TASK:
-      return { ...state, tasks: [...state.tasks].filter((task) => task.id !== action.payload) };
-    case GENERATE_TASKS:
-      return { ...state, tasks: action.payload };
-    default:
-      return state;
-  }
-};
+  const { tasks } = state
+  const { type, payload } = action
 
-export default rootReducer;
+  switch (type) {
+    case CREATE_TASK:
+      return { ...state, tasks: [...tasks, payload] }
+    case DELETE_TASK:
+      return {
+        ...state,
+        tasks: [...tasks].filter((task) => task.id !== payload)
+      }
+    case GENERATE_TASKS:
+      return { ...state, tasks: payload }
+    default:
+      return state
+  }
+}
+
+export default rootReducer
