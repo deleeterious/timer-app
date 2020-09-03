@@ -3,7 +3,9 @@ import { CREATE_TASK, DELETE_TASK, GENERATE_TASKS } from './types'
 import { store } from '..'
 
 function* workerLocalData() {
-  localStorage.setItem('tasksState', JSON.stringify(store.getState()))
+  const { tasks } = store.getState()
+
+  yield localStorage.setItem('tasksState', JSON.stringify(tasks))
 }
 
 export function* watchLocalData() {

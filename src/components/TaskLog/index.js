@@ -1,3 +1,3 @@
-import TaskLog from './TaskLog';
+import TaskLog from './TaskLog'
 
-export default TaskLog;
+export default TaskLog

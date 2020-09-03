@@ -1,27 +1,27 @@
-import React from 'react';
+import React from 'react'
 // redux
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 // material-ui
-import { Paper, Box, Button } from '@material-ui/core';
+import { Paper, Box, Button } from '@material-ui/core'
 // react-router
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom'
 // prop-types
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 // css
-import classes from './TaskInfo.module.css';
+import classes from './TaskInfo.module.css'
 // utils
-import { parseTime } from '../../utils/parseTime';
+import { parseTime } from '../../utils/parseTime'
 
 const TaskInfo = ({ tasks, match }) => {
-  const currentTask = tasks.find((task) => task.number.toString() === match.params.id);
+  const currentTask = tasks.find(
+    (task) => task.number.toString() === match.params.id
+  )
 
   if (!currentTask) {
-    return <Redirect to="/error" />;
+    return <Redirect to="/error" />
   }
 
-  const {
-    number, taskName, timeStart, timeEnd, timeSpend,
-  } = currentTask;
+  const { number, taskName, timeStart, timeEnd, timeSpend } = currentTask
 
   return (
     <Box className={classes.TaskInfo}>
@@ -45,15 +45,17 @@ const TaskInfo = ({ tasks, match }) => {
         Time spend:
         {parseTime(timeSpend, true)}
       </Paper>
-      <Button className={classes.Button} component={Link} to="/tasks">back</Button>
+      <Button className={classes.Button} component={Link} to="/tasks">
+        back
+      </Button>
     </Box>
-  );
-};
+  )
+}
 
-const mapStateToProps = (state) => ({ tasks: state.tasks });
+const mapStateToProps = (state) => ({ tasks: state.tasks })
 TaskInfo.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object),
-  match: PropTypes.object,
-};
+  match: PropTypes.object
+}
 
-export default connect(mapStateToProps, null)(TaskInfo);
+export default connect(mapStateToProps, null)(TaskInfo)

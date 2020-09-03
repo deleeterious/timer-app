@@ -1,3 +1,3 @@
-import TasksLogList from './TasksLogList';
+import TasksLogList from './TasksLogList'
 
-export default TasksLogList;
+export default TasksLogList

@@ -2,47 +2,42 @@
   color: #808080;
 }
 
-
 .Table td {
   color: #3248c7;
 }
 
-@media(max-width: 375px) {
+@media (max-width: 375px) {
   .Table th {
-  padding: 2px;
+    padding: 2px;
+  }
 
+  .Table td {
+    padding: 2px;
+    max-width: 55px;
+    font-size: 12px;
+  }
 }
 
-
-.Table td {
-  padding: 2px;
-  max-width: 55px;
-  font-size: 12px;
-}
-}
-
-@media(max-width: 590px) {
+@media (max-width: 590px) {
   .Table th {
-  padding: 5px;
-  max-width: 55px;
-  font-size: 12px;
+    padding: 5px;
+    max-width: 55px;
+    font-size: 12px;
+  }
+
+  .Table td {
+    padding: 5px;
+    max-width: 55px;
+    font-size: 12px;
+  }
 }
 
-
-.Table td {
-  padding: 5px;
-  max-width: 55px;
-  font-size: 12px;
-}
-}
-
-@media(max-width: 730px) {
+@media (max-width: 730px) {
   .Table th {
-  padding: 5px;
-}
+    padding: 5px;
+  }
 
-
-.Table td {
-  padding: 5px;
-}
+  .Table td {
+    padding: 5px;
+  }
 }

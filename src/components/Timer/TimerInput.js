@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
-import { Input } from '@material-ui/core';
-import classes from './Timer.module.css';
+import React, { memo } from 'react'
+import { Input } from '@material-ui/core'
+import classes from './Timer.module.css'
 
 const TimerInput = ({ inputTaskName, handleChangeInput, taskName }) => (
   <Input
@@ -11,6 +11,6 @@ const TimerInput = ({ inputTaskName, handleChangeInput, taskName }) => (
     onChange={handleChangeInput}
     placeholder="Name of your task"
   />
-);
+)
 
-export default memo(TimerInput);
+export default memo(TimerInput)

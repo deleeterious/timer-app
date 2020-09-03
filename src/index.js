@@ -17,7 +17,7 @@ const initialState = {
 }
 
 const persistedState = localStorage.getItem('tasksState')
-  ? JSON.parse(localStorage.getItem('tasksState'))
+  ? { ...initialState, tasks: JSON.parse(localStorage.getItem('tasksState')) }
   : initialState
 
 export const store = createStore(

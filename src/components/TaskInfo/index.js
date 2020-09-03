@@ -1,3 +1,3 @@
-import TaskInfo from './TaskInfo';
+import TaskInfo from './TaskInfo'
 
-export default TaskInfo;
+export default TaskInfo
