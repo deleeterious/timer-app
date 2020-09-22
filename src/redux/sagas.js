@@ -1,5 +1,5 @@
 import { takeEvery } from 'redux-saga/effects'
-import { CREATE_TASK, DELETE_TASK, GENERATE_TASKS } from './types'
+import { CREATE_TASK, DELETE_TASK, EDIT_TASK, GENERATE_TASKS } from './types'
 import { store } from '..'
 
 function* workerLocalData() {
@@ -9,5 +9,8 @@ function* workerLocalData() {
 }
 
 export function* watchLocalData() {
-  yield takeEvery([CREATE_TASK, DELETE_TASK, GENERATE_TASKS], workerLocalData)
+  yield takeEvery(
+    [CREATE_TASK, DELETE_TASK, GENERATE_TASKS, EDIT_TASK],
+    workerLocalData
+  )
 }

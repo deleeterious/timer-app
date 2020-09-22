@@ -1,4 +1,4 @@
-import { CREATE_TASK, DELETE_TASK, GENERATE_TASKS } from './types'
+import { CREATE_TASK, DELETE_TASK, EDIT_TASK, GENERATE_TASKS } from './types'
 
 const rootReducer = (state, action) => {
   const { tasks } = state
@@ -14,6 +14,23 @@ const rootReducer = (state, action) => {
       }
     case GENERATE_TASKS:
       return { ...state, tasks: payload }
+    case EDIT_TASK: {
+      const editedTasks = [...tasks]
+
+      editedTasks.forEach((item) => {
+        if (item.id === payload.id) {
+          item.taskName = payload.taskName
+          item.timeStart = payload.timeStart
+          item.timeEnd = payload.timeEnd
+          item.timeSpend = payload.timeSpend
+        }
+      })
+
+      return {
+        ...state,
+        tasks: editedTasks
+      }
+    }
     default:
       return state
   }

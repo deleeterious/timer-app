@@ -27,7 +27,7 @@ const TasksLogList = ({ tasks }) => {
           <TableCell>Time end</TableCell>
           <TableCell>Time spend</TableCell>
           <TableCell>Info</TableCell>
-          <TableCell>Delete</TableCell>
+          <TableCell>Edit / Delete</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

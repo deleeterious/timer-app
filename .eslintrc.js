@@ -27,6 +27,8 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'import/no-cycle': 'off',
     'react/require-default-props': 'off',
-    'require-yield': 'off'
+    'require-yield': 'off',
+    'no-param-reassign': ['error', { props: false }],
+    'no-shadow': 'off'
   }
 }
